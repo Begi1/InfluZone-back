@@ -30,11 +30,11 @@ export class InfluencerService {
     // Create influencer without sending email
     const newInfluencer = new this.influencerModel({ ...data, otp });
   
-    try {
-      await this.sendOtpEmail(data.email, otp);
-    } catch (error) {
-      console.error('Failed to send OTP email:', error);
-    }
+    // try {
+    //   await this.sendOtpEmail(data.email, otp);
+    // } catch (error) {
+    //   console.error('Failed to send OTP email:', error);
+    // }
   
     return newInfluencer.save();
   }
