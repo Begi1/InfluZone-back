@@ -2,7 +2,7 @@ import { Injectable, UnauthorizedException } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 import * as crypto from 'crypto';
-import * as sgMail from '@sendgrid/mail';
+// import * as sgMail from '@sendgrid/mail';
 import { Influencer } from './influencer.schema';
 import * as bcrypt from 'bcryptjs'; // bcryptjs for password hashing
 import { JwtService } from '@nestjs/jwt'; // Import JwtService
@@ -13,7 +13,7 @@ export class InfluencerService {
     @InjectModel(Influencer.name) private influencerModel: Model<Influencer>,
     private jwtService: JwtService,  // Inject JwtService
   ) {
-    sgMail.setApiKey(process.env.SENDGRID_API_KEY); // Set your SendGrid API key
+    // sgMail.setApiKey(process.env.SENDGRID_API_KEY); // Set your SendGrid API key
   }
 
   async create(data: Partial<Influencer>): Promise<Influencer> {
@@ -90,24 +90,24 @@ export class InfluencerService {
     return this.influencerModel.findByIdAndDelete(id).exec();
   }
 
-  private async sendOtpEmail(email: string, otp: string): Promise<boolean> {
-    const msg = {
-      to: email,
-      from: 'giorgibegii@gmail.com', // Use your verified SendGrid sender email
-      subject: 'Your OTP Code',
-      text: `Your OTP code is: ${otp}. It will expire in 5 minutes.`,
-      html: `<p>Your OTP code is: <strong>${otp}</strong>. It will expire in 5 minutes.</p>`,
-    };
+  // private async sendOtpEmail(email: string, otp: string): Promise<boolean> {
+  //   const msg = {
+  //     to: email,
+  //     from: 'giorgibegii@gmail.com', // Use your verified SendGrid sender email
+  //     subject: 'Your OTP Code',
+  //     text: `Your OTP code is: ${otp}. It will expire in 5 minutes.`,
+  //     html: `<p>Your OTP code is: <strong>${otp}</strong>. It will expire in 5 minutes.</p>`,
+  //   };
 
-    try {
-      await sgMail.send(msg);
-      console.log(`OTP sent to ${email}`);
-      return true;
-    } catch (error) {
-      console.error('Error sending OTP email:', error);
-      return false;
-    }
-  }
+  //   try {
+  //     await sgMail.send(msg);
+  //     console.log(`OTP sent to ${email}`);
+  //     return true;
+  //   } catch (error) {
+  //     console.error('Error sending OTP email:', error);
+  //     return false;
+  //   }
+  // }
 
   async updateProfileByEmail(email: string, updateData: any) {
     return this.influencerModel.findOneAndUpdate(
