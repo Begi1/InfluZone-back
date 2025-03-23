@@ -19,16 +19,22 @@ export class InfluencerService {
   async create(data: Partial<Influencer>): Promise<Influencer> {
     // Check if the email is already taken
     const existingInfluencer = await this.influencerModel.findOne({ email: data.email });
-    
+  
     if (existingInfluencer) {
       throw new Error('Email is already registered');
     }
   
     // Generate a 6-digit OTP
-    const otp = crypto.randomInt(100000, 999999).toString();
+    const otp = (crypto.randomInt(100000, 999999)).toString();
   
     // Create influencer without sending email
     const newInfluencer = new this.influencerModel({ ...data, otp });
+  
+    try {
+      await this.sendOtpEmail(data.email, otp);
+    } catch (error) {
+      console.error('Failed to send OTP email:', error);
+    }
   
     return newInfluencer.save();
   }
