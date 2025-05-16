@@ -19,6 +19,9 @@ export class Influencer extends Document {
   @Prop()
   date: string;
 
+  @Prop()
+  mainImage: string;
+
   @Prop({
     type: [
       {
@@ -53,6 +56,13 @@ export class Influencer extends Document {
 
   @Prop()
   otp: string;
+
+  @Prop({ default: false })
+  socialVerify: string;
+
+  @Prop({ default: 'user' })  // Add the role property with a default value of 'user'
+  role: string;
 }
+
 
 export const InfluencerSchema = SchemaFactory.createForClass(Influencer);

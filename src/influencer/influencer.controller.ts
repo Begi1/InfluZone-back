@@ -17,17 +17,11 @@ export class InfluencerController {
       }
       throw error;  // Rethrow other unexpected errors
     }
-    return this.influencerService.create(data);
   }
 
   @Post('verify-otp')
   async verifyOtp(@Body() body: { email: string; otp: string }) {
     return this.influencerService.verifyOtp(body.email, body.otp);
-  }
-
-  @Post('login')
-  async login(@Body() body: { email: string; password: string }) {
-    return this.influencerService.login(body.email, body.password);
   }
   
   @Get()

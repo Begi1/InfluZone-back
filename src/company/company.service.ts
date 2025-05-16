@@ -48,7 +48,7 @@ export class CompanyService {
       throw new UnauthorizedException('Invalid email or password');
     }
   
-    const payload = { email: company.email };
+    const payload = { email: company.email, role: company.role };
     const accessToken = this.jwtService.sign(payload);
   
     return { accessToken };

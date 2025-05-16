@@ -5,13 +5,12 @@ import * as crypto from 'crypto';
 // import * as sgMail from '@sendgrid/mail';
 import { Influencer } from './influencer.schema';
 import * as bcrypt from 'bcryptjs'; // bcryptjs for password hashing
-import { JwtService } from '@nestjs/jwt'; // Import JwtService
 
 @Injectable()
 export class InfluencerService {
   constructor(
     @InjectModel(Influencer.name) private influencerModel: Model<Influencer>,
-    private jwtService: JwtService,  // Inject JwtService
+
   ) {
     // sgMail.setApiKey(process.env.SENDGRID_API_KEY); // Set your SendGrid API key
   }
@@ -54,24 +53,6 @@ export class InfluencerService {
     } else {
       return { message: 'OTP is not correct' };  // OTP is incorrect
     }
-  }
-
-  async login(email: string, password: string): Promise<{ accessToken: string }> {
-  
-    const influencer = await this.influencerModel.findOne({ email }).exec();
-  
-    if (!influencer) {
-      throw new UnauthorizedException('Invalid email or password');
-    }
-  
-    if (influencer.password !== password) {
-      throw new UnauthorizedException('Invalid email or password');
-    }
-  
-    const payload = { email: influencer.email };
-    const accessToken = this.jwtService.sign(payload);
-  
-    return { accessToken };
   }
   
   async findAll(): Promise<Influencer[]> {

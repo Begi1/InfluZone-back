@@ -46,6 +46,9 @@ export class Company {
 
   @Prop()
   otp: string; 
+
+  @Prop({ default: 'company' })  // Add the role property with a default value of 'user'
+  role: string;
 }
 
 export const CompanySchema = SchemaFactory.createForClass(Company);
