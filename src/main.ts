@@ -7,7 +7,7 @@ async function bootstrap() {
 
   const app = await NestFactory.create(AppModule);
 
-  const allowedOrigins = ['http://localhost:4200', "https://influzone.ge"];
+  const allowedOrigins = ["https://influzone.ge"];
   // Enable CORS with specified origins, methods, headers, and credentials
   app.enableCors({
     origin: allowedOrigins,
